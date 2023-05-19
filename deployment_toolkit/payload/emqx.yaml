@@ -1,0 +1,23 @@
+ apiVersion: apps/v1
+ kind: Deployment
+ metadata:
+   name: emqx
+   namespace: emqx
+ spec:
+   selector:
+      matchLabels:
+         run: emqx
+   replicas: 1
+   template:
+      metadata:
+         labels:
+            run: emqx
+      spec:
+         containers:
+         - name: emqx-broker
+           image: emqx:5.0.22
+           ports:
+           - containerPort: 1883
+           env:
+           - name: EMQX_MQTT__MAX_PACKET_SIZE
+             value: 2MB

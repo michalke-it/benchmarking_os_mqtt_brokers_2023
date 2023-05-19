@@ -1,0 +1,55 @@
+2023-05-18 13:59:08,773 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2023-05-18 13:59:08,793 INFO o.a.j.JMeter: Loading user properties from: /home/user/apache-jmeter-5.5/bin/user.properties
+2023-05-18 13:59:08,793 INFO o.a.j.JMeter: Loading system properties from: /home/user/apache-jmeter-5.5/bin/system.properties
+2023-05-18 13:59:08,793 INFO o.a.j.JMeter: Setting JMeter property: request.ip=192.168.1.225
+2023-05-18 13:59:08,793 INFO o.a.j.JMeter: Setting JMeter property: request.port=31886
+2023-05-18 13:59:08,798 INFO o.a.j.JMeter: Copyright (c) 1998-2022 The Apache Software Foundation
+2023-05-18 13:59:08,798 INFO o.a.j.JMeter: Version 5.5
+2023-05-18 13:59:08,798 INFO o.a.j.JMeter: java.version=11.0.19
+2023-05-18 13:59:08,798 INFO o.a.j.JMeter: java.vm.name=OpenJDK 64-Bit Server VM
+2023-05-18 13:59:08,798 INFO o.a.j.JMeter: os.name=Linux
+2023-05-18 13:59:08,798 INFO o.a.j.JMeter: os.arch=amd64
+2023-05-18 13:59:08,798 INFO o.a.j.JMeter: os.version=5.15.0-67-generic
+2023-05-18 13:59:08,798 INFO o.a.j.JMeter: file.encoding=UTF-8
+2023-05-18 13:59:08,798 INFO o.a.j.JMeter: java.awt.headless=true
+2023-05-18 13:59:08,798 INFO o.a.j.JMeter: Max memory     =1073741824
+2023-05-18 13:59:08,798 INFO o.a.j.JMeter: Available Processors =4
+2023-05-18 13:59:08,804 INFO o.a.j.JMeter: Default Locale=English (EN)
+2023-05-18 13:59:08,805 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2023-05-18 13:59:08,805 INFO o.a.j.JMeter: JMeterHome=/home/user/apache-jmeter-5.5
+2023-05-18 13:59:08,805 INFO o.a.j.JMeter: user.dir  =/opt/development/benchfaas/test_scheduler/performance-tests/24-jmeter-hello-world-vernemq
+2023-05-18 13:59:08,805 INFO o.a.j.JMeter: PWD       =/opt/development/benchfaas/test_scheduler/performance-tests/24-jmeter-hello-world-vernemq
+2023-05-18 13:59:08,805 INFO o.a.j.JMeter: IP: 127.0.1.1 Name: testbench FullName: testbench
+2023-05-18 13:59:08,813 INFO o.a.j.s.FileServer: Default base='/opt/development/benchfaas/test_scheduler/performance-tests/24-jmeter-hello-world-vernemq'
+2023-05-18 13:59:08,814 INFO o.a.j.s.FileServer: Set new base='/opt/development/benchfaas/test_scheduler/performance-tests/24-jmeter-hello-world-vernemq/.'
+2023-05-18 13:59:08,934 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
+2023-05-18 13:59:08,950 INFO o.a.j.s.SaveService: Using SaveService properties version 5.0
+2023-05-18 13:59:08,953 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
+2023-05-18 13:59:08,956 INFO o.a.j.s.SaveService: Loading file: ./hello-world_vernemq.jmx
+2023-05-18 13:59:08,997 INFO o.a.j.JMeter: Creating summariser <summary>
+2023-05-18 13:59:09,010 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2023-05-18 13:59:09,012 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2023-05-18 13:59:09,012 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2023-05-18 13:59:09,020 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must contain the string: '.functions.'
+2023-05-18 13:59:09,020 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must not contain the string: '.gui.'
+2023-05-18 13:59:09,246 INFO o.a.j.JMeter: Running test (1684411149246)
+2023-05-18 13:59:09,262 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : Pub Group
+2023-05-18 13:59:09,262 INFO o.a.j.e.StandardJMeterEngine: Starting 1 threads for group Pub Group.
+2023-05-18 13:59:09,262 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2023-05-18 13:59:09,262 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=1 ramp-up=1 delayedStart=false
+2023-05-18 13:59:09,266 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2023-05-18 13:59:09,266 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 2 : Sub Group
+2023-05-18 13:59:09,266 INFO o.a.j.e.StandardJMeterEngine: Starting 1 threads for group Sub Group.
+2023-05-18 13:59:09,267 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2023-05-18 13:59:09,267 INFO o.a.j.t.ThreadGroup: Starting thread group... number=2 threads=1 ramp-up=1 delayedStart=false
+2023-05-18 13:59:09,267 INFO o.a.j.t.ThreadGroup: Started thread group number 2
+2023-05-18 13:59:09,267 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2023-05-18 13:59:09,274 INFO o.a.j.t.JMeterThread: Thread started: Pub Group 1-1
+2023-05-18 13:59:09,274 INFO o.a.j.t.JMeterThread: Thread started: Sub Group 2-1
+2023-05-18 13:59:09,579 INFO o.a.j.s.SampleResult: Note: Sample TimeStamps are START times
+2023-05-18 13:59:09,579 INFO o.a.j.s.SampleResult: sampleresult.default.encoding is set to ISO-8859-1
+2023-05-18 13:59:09,579 INFO o.a.j.s.SampleResult: sampleresult.useNanoTime=true
+2023-05-18 13:59:09,580 INFO o.a.j.s.SampleResult: sampleresult.nanoThreadSleep=5000
+2023-05-18 13:59:30,104 INFO o.a.j.r.Summariser: summary +    130 in 00:00:21 =    6.2/s Avg:    12 Min:     6 Max:   257 Err:     0 (0.00%) Active: 2 Started: 2 Finished: 0
+2023-05-18 13:59:36,962 INFO o.a.j.r.ResultCollector: Shutdown hook started
+2023-05-18 13:59:36,963 INFO o.a.j.r.ResultCollector: Shutdown hook ended

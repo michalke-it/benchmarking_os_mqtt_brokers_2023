@@ -1,67 +1,48 @@
 benchmark:
   parameters:
-    2: 1KB 10KB 100KB 1MB
-    4: 100 200 300 400 500
-    5: 5 20
+
+  ports:
+    1: 31081
+    2: 31082
+    3: 31080
+    4: 31081
+    5: 31082
+    6: 31080
+    7: 31883
+    8: 31884
+    10: 31887
+    11: 31883
+    12: 31884
+    14: 31887
+    18: 31081
+    19: 31082
+    20: 31080
+    21: 31883
+    22: 31887
+    23: 31884
+    24: 31886
+    25: 31885
+    26: 31883
+    27: 31884
+    28: 31887
+    29: 31885
+    30: 31886
+    31: 31883
+
   tests_to_execute:
     pm:
-      1:
-        lcl: 1 2 3
-        cld: 1 2 3
-        bad: 1 2 3
-        typ: 1 2 3
-        opt: 1 2 3
-      3:
-        lcl: 4 5
-        cld: 4 5
-        bad: 4 5
-        typ: 4 5
-        opt: 4 5
+      2:
+        lcl: 21 21 22 23 26 27 28
+        opt: 21 21 22 23 26 27 28
+        bad: 21 21 22 23 26 27 28
 
     vm:
-      1:
-        small:
-          lcl: 3
-          cld: 3
-          bad: 3
-          typ: 3
-          opt: 3
-
-        medium:
-          lcl: 3
-          cld: 3
-          bad: 3
-          typ: 3
-          opt: 3
-
+      2:
         large:
-          lcl: 1 2 3
-          cld: 1 2 3
-          bad: 1 2 3
-          typ: 1 2 3
-          opt: 1 2 3
+          lcl: 21 21 22 23 24 24 25 26 27 28 29 30
+          opt: 21 21 22 23 24 24 25 26 27 28 29 30
+          bad: 21 21 22 23 24 24 25 26 27 28 29 30
 
-      3:
-        small:
-          lcl: 4
-          cld: 4
-          bad: 4
-          typ: 4
-          opt: 4
-
-        medium:
-          lcl: 4
-          cld: 4
-          bad: 4
-          typ: 4
-          opt: 4
-
-        large:
-          lcl: 4 5
-          cld: 4 5
-          bad: 4 5
-          typ: 4 5
-          opt: 4 5
 qos:
   opt: ########### N = 5 ###########
     intra: 
@@ -116,17 +97,10 @@ software:
       address: lighthouse
       port: 4242
   k3s:
-    version: v1.20.5+k3s1 # v1.23.6+k3s1 
+    version: v1.23.6+k3s1
     port: 6443
-  openfaas:
-    version: 10.0.8
-    function-namespace: openfaas-fn
-    functions:
-      fib-go
-      hello-world
-      payload-echo
-      img-classifier-hub
-      payload-echo-workflow
+  k6:
+    xk6binarypath: "/home/user/go/bin/xk6"
   debug: false
 
 devices:
@@ -137,7 +111,7 @@ devices:
     login: marc
   testmachine:
     path: "/opt/development/serverless-bench-journal/setup_new/deployment/"
-    resultspath: "/opt/development/results/"
+    resultspath: "/opt/development/logs/"
     pm_interface: enp6s0
     vm_interface: enp6s0
   pm:

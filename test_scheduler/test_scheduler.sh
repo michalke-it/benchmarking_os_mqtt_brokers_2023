@@ -39,18 +39,36 @@ deploy_and_test() {
 
 tm_execute_tests() {
     TESTNUMBER=$1
+    XK6PATH=$(parsecfg software.k6.xk6binarypath)
     RESULTS=$(parsecfg devices.testmachine.resultspath)
-    TESTPORT=$(parsecfg devices.$DEVTYPE.openfaas.port)
-    #for CURRENTTEST in $(find test_scheduler/performance-tests/ -name "*.jmx" | grep -G $TESTNUMBER)
-    TEST_TO_EX=$(find test_scheduler/performance-tests/ -name "*.jmx" | cut -d'/' -f3- | grep -e "^$TESTNUMBER-")
+    mkdir -p ${RESULTS}${TIMESTAMP}
+    TEST_TO_EX=$(find test_scheduler/performance-tests/ \( -name "*.jmx" -o -name "*.js" \) | grep -v example | cut -d'/' -f3- | grep -e "^$TESTNUMBER-")
     echo "Found matches for $TESTNUMBER: $TEST_TO_EX"
     for CURRENTTEST in $TEST_TO_EX
     do
+        TESTPORT=$(parsecfg benchmark.ports.${TESTNUMBER})
         echo "Executing test: $CURRENTTEST using parameters $(parsecfg benchmark.parameters.${TESTNUMBER})"
         for TESTPARAMETER in $(parsecfg benchmark.parameters.${TESTNUMBER})
         do
             echo "executing $CURRENTTEST against $FAAS_IP:$TESTPORT with parameter $TESTPARAMETER while saving to ${RESULTS}${TIMESTAMP}/$(echo $CURRENTTEST | xargs basename | sed 's/\.jmx *$//')_"$TESTPARAMETER"_"$DEVNO""$DEVTYPE"."$SIZE"."$QOS"_"$TIMESTAMP".csv"
-            jmeter -n -t test_scheduler/performance-tests/$CURRENTTEST -Jrequest.ip=$FAAS_IP -Jrequest.port=$TESTPORT -Jtest.iterations=100 -Jtest.opt=$TESTPARAMETER -Jrequest.fsurl="http://$FAAS_IP_INT:$TESTPORT/function/payload-echo-workflow" -l ${RESULTS}${TIMESTAMP}/$(echo $CURRENTTEST | xargs basename | sed 's/\.jmx *$//')_"$TESTPARAMETER"_"$DEVNO""$DEVTYPE"."$SIZE"."$QOS"_"$TIMESTAMP".csv
+            if [[ $(echo ${CURRENTTEST##*.}) == "jmx" ]]
+            then
+                jmeter -n -t test_scheduler/performance-tests/$CURRENTTEST -Jrequest.ip=$FAAS_IP -Jrequest.port=$TESTPORT -Jtest.iterations=100 -Jtest.opt=$TESTPARAMETER -Jrequest.fsurl="http://$FAAS_IP_INT:$TESTPORT/function/payload-echo-workflow" -Jjmeterengine.force.system.exit=true -l ${RESULTS}${TIMESTAMP}/$(echo $CURRENTTEST | xargs basename | sed 's/\.jmx *$//')_"$TESTPARAMETER"_"$DEVNO""$DEVTYPE"."$SIZE"."$QOS"_"$TIMESTAMP".csv
+            elif [[ $(echo ${CURRENTTEST##*.}) == "js" ]]
+            then
+                cd test_scheduler/performance-tests/$(dirname $CURRENTTEST)
+                if [[ -f go.mod ]]
+                then
+                    echo "Detected go modules, using plain K6"
+                    K6PATH=${XK6PATH}
+                else
+                    echo "Did not detect go modules, using plain K6"
+                    K6PATH="$(dirname ${XK6PATH})/k6"
+                fi
+                $K6PATH run -q --env host=$FAAS_IP --env port=$TESTPORT --env parameter=$TESTPARAMETER --out csv=${RESULTS}${TIMESTAMP}/$(echo $CURRENTTEST | xargs basename | sed 's/\.js *$//')_"$TESTPARAMETER"_"$DEVNO""$DEVTYPE"."$SIZE"."$QOS"_"$TIMESTAMP".csv $(basename $CURRENTTEST)
+                cd -
+                echo "executed $CURRENTTEST against $FAAS_IP:$TESTPARAMETER"
+            fi
         done
     done
 }

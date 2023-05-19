@@ -1,0 +1,23 @@
+ apiVersion: apps/v1
+ kind: Deployment
+ metadata:
+   name: vernemq
+   namespace: vernemq
+ spec:
+   selector:
+      matchLabels:
+         run: vernemq
+   replicas: 1
+   template:
+      metadata:
+         labels:
+            run: vernemq
+      spec:
+         containers:
+         - name: vernemq-broker
+           image: vernemq/vernemq:1.12.6.2-alpine
+           ports:
+           - containerPort: 1883
+           env:
+           - name: DOCKER_VERNEMQ_ACCEPT_EULA
+             value: "yes"

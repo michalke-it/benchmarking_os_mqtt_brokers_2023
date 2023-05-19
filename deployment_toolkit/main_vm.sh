@@ -13,7 +13,7 @@ trigger_vm_deployment() {
 	echo "Installing to hypervisor $ADDRESS"
 	FAAS_IP=$(parsecfg devices.vm.benchmark_ip)
 	read_qos
-        trigger_vm_cleanup
+    trigger_vm_cleanup
 	copy_hv
 	configure_vms
 	ssh -n ${LOGIN}@${ADDRESS} "${WORKPATH}benchfaas/deployment_toolkit/vm/deploy_vms.sh"

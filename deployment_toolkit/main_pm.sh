@@ -52,15 +52,19 @@ trigger_pm_deployment() {
 }
 
 trigger_pm_cleanup() {
-	if [[ $(parsecfg devices.$DEVICEKEY.devices.$i.headnode_advert) != "null" ]]
-	then
-		echo "Cleaning up k3s server from $ADDRESS..."
-		ssh -n $LOGIN@$ADDRESS "/usr/local/bin/k3s-uninstall.sh > /dev/null"
-	else
-		echo "Cleaning up k3s agent from $ADDRESS..."
-                ssh -n $LOGIN@$ADDRESS "/usr/local/bin/k3s-agent-uninstall.sh > /dev/null"
-	fi
-	ssh -n $LOGIN@$ADDRESS "sudo tc qdisc delete dev $(parsecfg devices.$DEVICEKEY.devices.$i.qos_interface) root"
+    if $(ssh -n $LOGIN@$ADDRESS "test -f /usr/local/bin/k3s-uninstall.sh")
+    then
+        echo "Cleaning up k3s server from node $i with $ADDRESS..."
+        ssh -n $LOGIN@$ADDRESS "/usr/local/bin/k3s-uninstall.sh > /dev/null"
+    fi
+    if $(ssh -n $LOGIN@$ADDRESS "test -f /usr/local/bin/k3s-agent-uninstall.sh")
+    then
+        echo "Cleaning up k3s agent from node $i with $ADDRESS..."
+        ssh -n $LOGIN@$ADDRESS "/usr/local/bin/k3s-agent-uninstall.sh > /dev/null"
+    fi
+    ssh -n $LOGIN@$ADDRESS "sudo tc qdisc delete dev $(parsecfg devices.$DEVICEKEY.devices.$i.qos_interface) root"
+    ssh -n $LOGIN@$ADDRESS "sudo rm /usr/local/bin/kustomize"
+    ssh -n $LOGIN@$ADDRESS "sudo rm /usr/local/bin/clusteradm"
 	ssh -n $LOGIN@$ADDRESS "sudo reboot"
 	sleep 5
 	while ! ssh -n $LOGIN@$ADDRESS "ls > /dev/null"; do sleep 0.5; done
